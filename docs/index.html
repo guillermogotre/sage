@@ -1,22 +1,168 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
+<html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
         <title>SAGE: Don't Forget your Inverse DDIM for Image Editing</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <!-- Favicon-->
+        <link rel="icon" type="image/png" href="assets/favicon.png" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
     </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        Hello world! This is HTML5 Boilerplate.
-        <script src="" async defer></script>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="#page-top"><span>SAGE</span></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="#teaser">Teaser</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#method">Method</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#comparison">Comparison</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#results">Additional results</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#bibtex">BibTeX</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container">
+                <div class="masthead-subheading"><span class="project-title">SAGE</span>: Don't Forget your Inverse DDIM for Image Editing</div>
+                <!-- Authors -->
+                <div class="masthead-little">
+                    Guillermo Gomez-Trenado<sup>1</sup>,
+                    Pablo Mesejo<sup>1</sup>, 
+                    Óscar Cordón<sup>1</sup>, 
+                    Stéphane Lathuilière<sup>2</sup>
+                </div>
+                <div class="masthead-little masthead-light">
+                    <sup>1</sup>DaSCI research institute, DECSAI, University of Granada, Granada, Spain
+                </div>
+                <div class="masthead-little masthead-light">
+                    <sup>2</sup>LTCI, Telécom-Paris, Intitute Polytechnique de Paris, Palaiseau, France
+                </div>
+                <!-- End Authors -->
+                <!-- Buttons -->
+                <div class="masthead-buttons mt-5">
+                    <a class="btn btn-primary btn-xl text-uppercase m-1" href="https://arxiv.org/abs/2109.14881" target="_blank">
+                        <!-- <i class="ai ai-arxiv me-1"></i> -->
+                        <i class="fa-solid fa-file-lines me-1"></i>
+                        Arxiv
+                    </a>
+                    <a class="btn btn-primary btn-xl text-uppercase m-1" href="https://arxiv.org/abs/2109.14881" target="_blank">
+                        <i class="fab fa-github me-1"></i>
+                        Code
+                    </a>
+                    <a class="btn btn-primary btn-xl text-uppercase m-1" href="https://arxiv.org/abs/2109.14881" target="_blank">
+                        <i class="fa-solid fa-person-running me-1"></i>
+                        Demo
+                    </a>
+                </div>
+
+            </div>
+        </header>
+        <!-- Services-->
+        <section class="page-section" id="teaser">
+            <div class="container">
+                <div class="text-center">
+                    <!-- <h2 class="section-heading text-uppercase">Services</h2>
+                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3> -->
+                    <img src="assets/img/teaser_ext.jpg" alt="Method teaser" class="big">
+                    <h3 class="section-subheading text-muted">The field of text-to-image generation has undergone significant advancements with the introduction of diffusion models. However, the challenge of editing real images has persisted, with most methods being too computationally intensive or resulting in poor reconstruction. In this paper, we introduce SAGE, a novel technique utilizing pre-trained diffusion models for image editing. The superior performance of SAGE compared to existing approaches is evidenced through both quantitative and qualitative evaluations, complemented by a detailed user study.</p>
+                </div>
+            </div>
+        </section>
+        <!-- Portfolio Grid-->
+        <section class="page-section bg-light" id="method">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Method</h2>
+                    <h3 class="section-subheading text-muted">SAGE, standing for Self-Attention Guidance for image Editing, builds upon the DDIM algorithm. It incorporates a novel guidance mechanism leveraging the self-attention layers of the diffusion U-Net. This mechanism computes a reconstruction objective by utilizing attention maps generated during the inverse DDIM process. This allows for the efficient reconstruction of unedited regions, eliminating the need for precise reconstruction of the entire input image, thereby addressing the key challenges in image editing. </h3>
+                </div>
+                <div class="container">
+                    <div class="text-center">
+                        <img src="assets/img/pipeline.jpg" alt="Method pipeline" class="big padded">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- About-->
+        <section class="page-section" id="comparison">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Comparison with other methods</h2>
+                    <!-- <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3> -->
+                    <img src="assets/img/comp.jpg" alt="" class="big">
+                </div>
+            </div>
+        </section>
+
+        <section class="page-section bg-light" id="results">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Additional results</h2>
+                    <!-- <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3> -->
+                    <img src="assets/img/comp2.jpg" alt="" class="big mb-5 padded">
+                    <img src="assets/img/comp3.jpg" alt="" class="big padded">
+                </div>
+            </div>
+        </section>
+        <!-- Team-->
+        <!-- Contact-->
+        <section class="page-section" id="bibtex">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading">BibTeX</h2>
+                    <div class="monospace">
+                        @article{,
+                            <br>
+                            author    = {},
+                            <br>
+                            title     = {},
+                            <br>
+                            journal   = {},
+                            <br>
+                            year      = {},
+                            <br>
+                          }
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="footer py-4">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-4 text-lg-start"></div>
+                </div>
+                <div class="text-center">
+                    <p>Copyright &copy; Guillermo Gomez-Trenado  |  Source code available at <a href="">Github</a> </p>
+                    
+                </div>
+            </div>
+        </footer>
+        
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     </body>
 </html>
