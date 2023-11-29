@@ -102,7 +102,7 @@ def gradio_main():
                         return_ddim_inv_rec = gr.Checkbox(label="DDIM Inverse Reconstruction", value=False, elem_classes=["history-checkbox"])
                         return_mask_history = gr.Checkbox(label="Mask History", value=False, elem_classes=["history-checkbox"])
                         return_z0_estimation_history = gr.Checkbox(label="z0 estimation", value=False, elem_classes=["history-checkbox"])
-                        return_cross_attn_history = gr.Checkbox(label="Cross Attn History", value=False, elem_classes=["history-checkbox"], interactive=(not low_memory))
+                        return_cross_attn_history = gr.Checkbox(label="Cross Attn History", value=False, elem_classes=["history-checkbox"], interactive=(not low_memory), info="Not available on low memory environments" if low_memory else None)
                         return_pixelwise_epsilon_norm_history = gr.Checkbox(label="Pixelwise Epsilon Norm History", value=False, elem_classes=["history-checkbox"])
                         return_pixelwise_selfattn_grad_norm_history = gr.Checkbox(label="Pixelwise Selfattn Grad Norm History", value=False, elem_classes=["history-checkbox"])
                     # Create a function to activate all checkboxes
