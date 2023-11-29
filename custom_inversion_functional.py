@@ -20,10 +20,16 @@ from sage_tools.visualization import plot_mask_history, save_image, generate_ran
     plot_z0_history, torch_to_pil, latent_to_torch, latent_to_torch,\
     plot_cross_attn_history
 
-# DTYPE = torch.float16
-# DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-DTYPE = torch.float32
-DEVICE= 'cpu'
+is_cuda = torch.cuda.is_available()
+if is_cuda:
+    DTYPE = torch.float16
+    DEVICE = torch.device("cuda:0")
+    DEFAULT_LOSS_SCALE = 500
+else:
+    DTYPE = torch.float32
+    DEVICE= 'cpu'
+    DEFAULT_LOSS_SCALE = 300
+    
 loss_dict = dict(mae=nnf.l1_loss, mse=nnf.mse_loss)
 
 pipe = None
@@ -93,7 +99,7 @@ def run(
     cfg_mask_min = 1.,
     zt_replace_steps_min = 0.,
     cfg_value = 7.5,
-    loss_scale = 5e2,
+    loss_scale = None,
     max_steps = 40,
     use_monotonical_scale = True,
     noise_alpha = 0.0,
@@ -126,6 +132,8 @@ def run(
         z0_guidance = True
     elif reconstruction_type == "replace":
         replace_self_attn = True
+        
+    loss_scale = DEFAULT_LOSS_SCALE if loss_scale is None or loss_scale == 0 else loss_scale
         
         
         

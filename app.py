@@ -1,14 +1,25 @@
 from custom_inversion_functional import run
 import gradio as gr
+import torch
+
+is_cuda_available = torch.cuda.is_available() and False
 
 if __name__ == "__main__":    
     with gr.Blocks(
         css='static/custom_inversion_functional.css', js='static/custom_inversion_functional.js') as demo:
         
-        gr.Markdown("# Guided Editing")
+        gr.Markdown("# SAGE: Self-Attention Guidance for Image Editing")
+        if not is_cuda_available:
+            gr.HTML("""
+                    <div class="alert alert-warning" role="alert" style="color:red">
+                        <strong>Warning!</strong> No GPU detected. We highly disadvise to use SAGE on CPU.
+                        <br>
+                        You can visit <a href="https://github.com/guillermogotre/sage">SAGE webpage</a> for more information about how to run it on GPU.
+                        <br>
+                        If you're running this on HF, you can duplicate the project and launch it on a GPU server.
+                    </div>
+                    """)
         gr.Markdown("""
-                    Guided Editing
-                    
                     Recomended Settings: 
                     - SD1.4 & SD1.5 - 512x512, Self-attn layer: 1, Cross-attn layer: 2,  Self-attn Guidance Scale: 200
                     - SD2.1 - 768x768, Self-attn layer: 2, Cross-attn layer: 2, Self-attn Guidance Scale: 50
@@ -67,7 +78,8 @@ if __name__ == "__main__":
                     use_monotonical_scale = gr.Checkbox(label="Use Monotonical Scale", value=True)
                     
                     ddim_steps = gr.Number(label="DDIM Steps", value=50)
-                    loss_scale = gr.Number(label="Loss Scale", value=5e2)
+                    # loss_scale = gr.Number(label="Loss Scale", value=5e2, info="FP16:500 FP32:250")
+                    loss_scale = gr.Number(label="Loss Scale", value=None, info="FP16:500 FP32:300", interactive=False)
                     noise_alpha = gr.Number(label="Noise Alpha", value=0.0)
                     
                     seed = gr.Number(label="Seed", value=8888)
