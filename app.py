@@ -137,4 +137,5 @@ if __name__ == "__main__":
             outputs=[output_image, vae_reconstruction, ddim_reconstruction, mask_history, z0_estimation_history, cross_attn_history, prompt_latent_norm, pixelwise_epsilon_norm_history, pixelwise_selfattn_grad_norm_history]
         )
         # demo.load(js=js)
-    demo.launch(debug=True, server_port=8088)
+    # demo.launch(debug=True, server_port=8088)
+    demo.launch()
