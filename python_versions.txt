@@ -1,0 +1,11 @@
+# Name                    Version                   Build  Channel
+accelerate                0.23.0                   pypi_0    pypi
+diffusers                 0.21.4                   pypi_0    pypi
+gradio                    4.1.1                    pypi_0    pypi
+numpy                     1.26.0          py311h64a7726_0    conda-forge
+python                    3.11.6          hab00c5b_0_cpython    conda-forge
+pytorch                   2.0.1           py3.11_cuda11.7_cudnn8.5.0_0    pytorch
+pytorch-cuda              11.7                 h778d358_5    pytorch
+torchmetrics              1.2.0              pyhd8ed1ab_0    conda-forge
+torchvision               0.15.2              py311_cu117    pytorch
+transformers              4.35.0.dev0              pypi_0    pypi
