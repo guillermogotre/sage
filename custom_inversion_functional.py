@@ -121,6 +121,7 @@ def run(
     # Save copy
     save_copy=False,
     disable_tqdm=False,
+    low_memory=False,
 ):
     cross_guidance = False
     z0_guidance = False
@@ -171,6 +172,7 @@ def run(
     assert not (do_replace and replace is None)
     assert not (do_mask and blend is None)
     assert not (cross_guidance and z0_guidance)
+    assert not (low_memory and return_cross_attn_history)
     
     # Default return values
     mask_history_img = None
@@ -373,7 +375,6 @@ def run(
                     forward_scheduler.step(uncond_pred, t, latents_ori, return_dict=True).pred_original_sample.detach().clone().cpu()
                 )
     
-        # TODO compute "CFG noise_pred" & "self-att guidance" pixelwise norm
         if cfg_mask_min < 1: 
             guidance_value = attn_mask.mask_like(cond_pred).clamp(cfg_mask_min,1)*cfg_value
         else:
@@ -401,8 +402,10 @@ def run(
                     torch.cat(ref_attention.self).to(DEVICE))
             loss = guidance_loss * loss_scale
             grad = torch.autograd.grad(loss, latents_ori)
-        else:
+        
+        if low_memory or not do_grad:
             attn_store.clear_t(t_next)
+            attn_replace.clear_t(t_next)
             
         
         # Apply reconstruction guidance

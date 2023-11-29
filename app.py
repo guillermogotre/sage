@@ -1,10 +1,20 @@
 from custom_inversion_functional import run
 import gradio as gr
 import torch
+import os
+from functools import partial
 
-is_cuda_available = torch.cuda.is_available() and False
+# get GRADIO_PORT environment variable
+gradio_port = os.environ.get('GRADIO_PORT', None)
+if gradio_port is not None:
+    gradio_port = int(gradio_port)
 
-if __name__ == "__main__":    
+# false if SAGE_MEMORY_INTENSIVE exists
+low_memory = not os.getenv("SAGE_MEMORY_INTENSIVE", False)
+
+is_cuda_available = torch.cuda.is_available()
+
+def gradio_main():
     with gr.Blocks(
         css='static/custom_inversion_functional.css', js='static/custom_inversion_functional.js') as demo:
         
@@ -92,7 +102,7 @@ if __name__ == "__main__":
                         return_ddim_inv_rec = gr.Checkbox(label="DDIM Inverse Reconstruction", value=False, elem_classes=["history-checkbox"])
                         return_mask_history = gr.Checkbox(label="Mask History", value=False, elem_classes=["history-checkbox"])
                         return_z0_estimation_history = gr.Checkbox(label="z0 estimation", value=False, elem_classes=["history-checkbox"])
-                        return_cross_attn_history = gr.Checkbox(label="Cross Attn History", value=False, elem_classes=["history-checkbox"])
+                        return_cross_attn_history = gr.Checkbox(label="Cross Attn History", value=False, elem_classes=["history-checkbox"], interactive=(not low_memory))
                         return_pixelwise_epsilon_norm_history = gr.Checkbox(label="Pixelwise Epsilon Norm History", value=False, elem_classes=["history-checkbox"])
                         return_pixelwise_selfattn_grad_norm_history = gr.Checkbox(label="Pixelwise Selfattn Grad Norm History", value=False, elem_classes=["history-checkbox"])
                     # Create a function to activate all checkboxes
@@ -124,7 +134,9 @@ if __name__ == "__main__":
             
 
         button.click(
-            run,
+            partial(
+                run,
+                low_memory=low_memory),
             inputs=[
                 input_image, prompt, edited_prompt, attention_scale, replace, blend, seed, side, ddim_steps, use_vae_mean, model_id, 
                 use_trailing, self_latent_guidance_scale, cross_replace_steps, self_attention_guidance_mask_min, 
@@ -136,6 +148,8 @@ if __name__ == "__main__":
             ],
             outputs=[output_image, vae_reconstruction, ddim_reconstruction, mask_history, z0_estimation_history, cross_attn_history, prompt_latent_norm, pixelwise_epsilon_norm_history, pixelwise_selfattn_grad_norm_history]
         )
-        # demo.load(js=js)
     # demo.launch(debug=True, server_port=8088)
-    demo.launch()
+    demo.launch(debug=True, share=gradio_port is None, server_port=gradio_port)
+    
+if __name__ == "__main__":    
+    gradio_main()

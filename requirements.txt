@@ -1,3 +1,4 @@
+accelerate
 diffusers
 gradio
 numpy 
@@ -5,3 +6,5 @@ torch
 torchvision
 transformers
 tqdm
+matplotlib
+pillow

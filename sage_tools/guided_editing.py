@@ -161,8 +161,9 @@ class AttnStore:
         self.store = {}
         
     def clear_t(self, t):
-        self.store[(t, True)] = []
-        self.store[(t, False)] = []
+        for k in [(t, True), (t, False)]:
+            if k in self.store:
+                del self.store[k]
     
     def fix(self):
         for k,v in self.store.items():
@@ -248,6 +249,10 @@ class AttnReplace:
         
     def clear(self):
         self.store = {}
+        
+    def clear_t(self, t):
+        if t in self.store:
+            del self.store[t]
         
     def fix(self):
         self.store_ref = self.store
