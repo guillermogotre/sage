@@ -14,7 +14,7 @@ low_memory = not os.getenv("SAGE_MEMORY_INTENSIVE", False)
 
 is_cuda_available = torch.cuda.is_available()
 
-def gradio_main(sharing=False):
+def gradio_main(share=False):
     with gr.Blocks(
         css='static/custom_inversion_functional.css', js='static/custom_inversion_functional.js') as demo:
         
@@ -156,7 +156,7 @@ def gradio_main(sharing=False):
         )
     # demo.launch(debug=True, server_port=8088)
     demo.launch(
-        sharing=sharing,
+        share=share,
         debug=True, 
         share=gradio_port is None, 
         server_port=gradio_port)
