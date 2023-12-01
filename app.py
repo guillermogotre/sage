@@ -26,7 +26,7 @@ def gradio_main():
                         <br>
                         You can visit <a href="https://github.com/guillermogotre/sage">SAGE webpage</a> for more information about how to run it on GPU for free.
                         <br>
-                        If you're running this on HF, you can duplicate the project and launch it on a GPU server.
+                        If you're running this on HF, you can clone this project and launch it on a GPU server.
                         <br>
                         You can also run it on Google Colab.
                         <br>
