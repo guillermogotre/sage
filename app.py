@@ -22,11 +22,17 @@ def gradio_main():
         if not is_cuda_available:
             gr.HTML("""
                     <div class="alert alert-warning" role="alert" style="color:red">
-                        <strong>Warning!</strong> No GPU detected. We highly disadvise to use SAGE on CPU.
+                        <strong>Warning!</strong> No GPU detected. We strongly advise the user against running it on CPU.
                         <br>
-                        You can visit <a href="https://github.com/guillermogotre/sage">SAGE webpage</a> for more information about how to run it on GPU.
+                        You can visit <a href="https://github.com/guillermogotre/sage">SAGE webpage</a> for more information about how to run it on GPU for free.
                         <br>
                         If you're running this on HF, you can duplicate the project and launch it on a GPU server.
+                        <br>
+                        You can also run it on Google Colab.
+                        <br>
+                        <a href="https://colab.research.google.com/github/guillermogotre/sage/blob/main/app_colab.ipynb">
+                            <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+                        </a>
                     </div>
                     """)
         gr.Markdown("""
