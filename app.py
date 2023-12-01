@@ -158,7 +158,6 @@ def gradio_main(share=False):
     demo.launch(
         share=share,
         debug=True, 
-        share=gradio_port is None, 
         server_port=gradio_port)
     
 if __name__ == "__main__":    
