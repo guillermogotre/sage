@@ -22,7 +22,7 @@ Source code for the paper "Don't Forget your Inverse DDIM for Image Editing".
 
 <p align="center" id="links">
   <a href="https://guillermogotre.github.io/sage/">Project Page</a> |
-  <a href="">Arxiv</a> |
+  <a href="https://arxiv.org/abs/2505.09571">Arxiv</a> |
   <a href="https://github.com/guillermogotre/sage">Code</a> |
   <a href="https://huggingface.co/spaces/guillermogotre/sage">HuggingFace Demo (CPU)</a>
 </p>
@@ -92,10 +92,13 @@ The main files for running SAGE are in the root path of this repository:
 
 ## Citation
 ```
-@article{,
-  author = {},
-  title = {},
-  journal = {},
-  year = {},
+@misc{gomeztrenado2025dontforgetinverseddim,
+      title={Don't Forget your Inverse DDIM for Image Editing}, 
+      author={Guillermo Gomez-Trenado and Pablo Mesejo and Oscar Cordón and Stéphane Lathuilière},
+      year={2025},
+      eprint={2505.09571},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2505.09571}, 
 }
 ```
